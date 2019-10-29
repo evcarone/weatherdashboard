@@ -5,7 +5,10 @@ body {
   }
 
   p {
-    line-height: 10px;
+    line-height: .75rem;
+    font-weight: lighter;
+    margin: 0;
+    
   }
 
   textarea {
@@ -20,6 +23,7 @@ body {
   
   .jumbotron {
     text-align: center;
+    box-align: middle;
     background-color: steelblue;
     color: whitesmoke;
     border-radius: 0;

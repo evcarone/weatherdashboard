@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./style.css" />
 
-    <script src="./scripts.js"></script>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/scripts.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
 
@@ -21,28 +22,143 @@
 <body>
 
     <header class="jumbotron">
-        <h1 class="display-3">Weather Dashboard</h1>
-        <p class="lead">A simple weather dashboard to check if you need an umbrella or a bathing suit.</p>
-        <p id="currentDay" class="lead"></p>
+        <h1 class="display-4">Weather Dashboard</h1>
+        <h6 class="lead">A simple weather dashboard to check if you need an umbrella or a bathing suit.</h6>
+        <h6 id="currentDay" class="lead"></h6>
     </header>
 
-    <script>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div class="card bg-light">
+                    <div class="card-block">
+                        <input class="form-control" type="text" placeholder="enter city">
+                        <ul class="list-group">
+                            <li class="list-group-item" id="city1"></li>
+                            <li class="list-group-item" id="city2"></li>
+                            <li class="list-group-item" id="city3"></li>
+                            <li class="list-group-item" id="city4"></li>
+                            <li class="list-group-item" id="city5"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col">
+                <div class="card bg-light">
+                    <div class="card-block">
+                        <h3 class="card-text" id="city">Houston (10/29/19)</h3>
+                        <p class="card-text" id="temp">temp: 73F</p>
+                        <p class="card-text" id="humidity">humidity: 41%</p>
+                        <p class="card-text" id="windspeed">windspeed: 4.7 mph/<p>
+                                <p class="card-text" id="uvindex">UV Index: 9.83</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h2>5 Day Forecast</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col px-md-1">
+                        <div class="card bg-primary text-white" style="max-height: 150px; max-width: 150px">
+                            <div class="card-body">
+                                    <p class="card-text" id="temp">date</p>
+                                    <p class="card-text" id="humidity">icon</p>
+                                    <p class="card-text" id="windspeed">temp</p>
+                                    <p class="card-text" id="uvindex">humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col px-md-1">
+                            <div class="card bg-primary text-white" style="max-height: 150px; max-width: 150px">
+                                <div class="card-body">
+                                    <p class="card-text" id="temp">date</p>
+                                    <p class="card-text" id="humidity">icon</p>
+                                    <p class="card-text" id="windspeed">temp</p>
+                                    <p class="card-text" id="uvindex">humidity</p>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="col px-md-1">
+                        <div class="card bg-primary text-white" style="max-height: 150px; max-width: 150px;">
+                            <div class="card-body">
+                                <p class="card-text" id="temp">date</p>
+                                <p class="card-text" id="humidity">icon</p>
+                                <p class="card-text" id="windspeed">temp</p>
+                                <p class="card-text" id="uvindex">humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col px-md-1">
+                        <div class="card bg-primary text-white" style="max-height: 150px; max-width: 150px">
+                            <div class="card-body">
+                                <p class="card-text" id="temp">date</p>
+                                <p class="card-text" id="humidity">icon</p>
+                                <p class="card-text" id="windspeed">temp</p>
+                                <p class="card-text" id="uvindex">humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col px-md-1">
+                        <div class="card bg-primary text-white" style="max-height: 150px; max-width: 150px">
+                            <div class="card-body">
+                                <p class="card-text" id="temp">date</p>
+                                <p class="card-text" id="humidity">icon</p>
+                                <p class="card-text" id="windspeed">temp</p>
+                                <p class="card-text" id="uvindex">humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+        <script>
+            var APIKey = "8522788feb48b4797ad60e7823e7392b"
+            queryURL =
+                "https://api.openweathermap.org/data/2.5/weather?q=houston&appid=8522788feb48b4797ad60e7823e7392b"
+
             $(document).ready(function () {
-              
-              //display the current day in the header
-              var currentDayEl = $("#currentDay")
-              var dayIs = moment().format("dddd, MMMM Do YYYY");
-              currentDayEl.text(dayIs);
-        
+
+                //display the current day in the header
+                var currentDayEl = $("#currentDay")
+                var dayIs = moment().format("dddd, MMMM Do YYYY");
+                currentDayEl.text(dayIs);
+
+
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                }).then(function (response) {
+                    console.log(response);
+                    console.log(response.name);
+                    var weatherDiv = $("test")
+
+                    console.log(" the city name is " + response.name);
+                    $("#city1").text(response.name + " 1")
+                    $("#city2").text(response.name + " 2")
+                    $("#city3").text(response.name + " 3")
+                    $("#city4").text(response.name + " 4")
+                    $("#city5").text(response.name + " 5")
+                });
+
             })
-
-    var APIKey = "8522788feb48b4797ad60e7823e7392b"
-    </script>            
+        </script>
 
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    |
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        |
 </body>
 
 </html>

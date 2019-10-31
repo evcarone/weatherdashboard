@@ -32,7 +32,7 @@
             <div class="col-3">
                 <div class="card bg-light">
                     <div class="card-block">
-                        <input class="form-control" type="text" placeholder="enter city">
+                        <input class="form-control" type="text" placeholder="enter city" id="srchCity">
                         <ul class="list-group">
                             <li class="list-group-item" id="city1"></li>
                             <li class="list-group-item" id="city2"></li>
@@ -117,12 +117,6 @@
     </div>
 
 
-
-
-
-
-
-
         <script>
             var APIKey = "8522788feb48b4797ad60e7823e7392b"
             queryURL =
@@ -132,8 +126,16 @@
 
                 //display the current day in the header
                 var currentDayEl = $("#currentDay")
+                var searchDivEl = $("#srchCity")
                 var dayIs = moment().format("dddd, MMMM Do YYYY");
                 currentDayEl.text(dayIs);
+
+                $("#srchCity").on("click", function() {
+                    console.log("after enter the city name is" + searchDivEl)
+                })
+                
+                console.log("the city name is" + searchDiv)
+
 
 
                 $.ajax({

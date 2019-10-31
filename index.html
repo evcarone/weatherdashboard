@@ -32,7 +32,15 @@
             <div class="col-3">
                 <div class="card bg-light">
                     <div class="card-block">
-                        <input class="form-control" type="text" placeholder="enter city" id="srchCity">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="city name" id="srchCity">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="srchBtn">Search</button>
+                            </div>
+
+                        </div>
+
+                        <!-- <input class="form-control" type="text" placeholder="enter city" id="srchCity"> -->
                         <ul class="list-group">
                             <li class="list-group-item" id="city1"></li>
                             <li class="list-group-item" id="city2"></li>
@@ -52,7 +60,7 @@
                         <p class="card-text" id="temp">temp: 73F</p>
                         <p class="card-text" id="humidity">humidity: 41%</p>
                         <p class="card-text" id="windspeed">windspeed: 4.7 mph/<p>
-                        <p class="card-text" id="uvindex">UV Index: 9.83</p>
+                                <p class="card-text" id="uvindex">UV Index: 9.83</p>
                     </div>
                 </div>
                 <div class="row py-0">
@@ -64,23 +72,23 @@
                     <div class="col px-md-1">
                         <div class="card bg-primary text-white" style="max-height: 200px; max-width: 150px">
                             <div class="card-body py-0">
-                                    <p class="card-text" id="temp">date</p>
-                                    <p class="card-text" id="humidity">icon</p>
-                                    <p class="card-text" id="windspeed">temp</p>
-                                    <p class="card-text" id="uvindex">humidity</p>
+                                <p class="card-text" id="temp">date</p>
+                                <p class="card-text" id="humidity">icon</p>
+                                <p class="card-text" id="windspeed">temp</p>
+                                <p class="card-text" id="uvindex">humidity</p>
                             </div>
                         </div>
                     </div>
                     <div class="col px-md-1">
-                            <div class="card bg-primary text-white" style="max-height: 200px; max-width: 150px">
-                                <div class="card-body py-0">
-                                    <p class="card-text" id="temp">date</p>
-                                    <p class="card-text" id="humidity">icon</p>
-                                    <p class="card-text" id="windspeed">temp</p>
-                                    <p class="card-text" id="uvindex">humidity</p>
-                                </div>
+                        <div class="card bg-primary text-white" style="max-height: 200px; max-width: 150px">
+                            <div class="card-body py-0">
+                                <p class="card-text" id="temp">date</p>
+                                <p class="card-text" id="humidity">icon</p>
+                                <p class="card-text" id="windspeed">temp</p>
+                                <p class="card-text" id="uvindex">humidity</p>
                             </div>
                         </div>
+                    </div>
                     <div class="col px-md-1">
                         <div class="card bg-primary text-white" style="max-height: 200px; max-width: 150px;">
                             <div class="card-body py-0">
@@ -117,50 +125,70 @@
     </div>
 
 
-        <script>
+    <script>
+        $(document).ready(function () {
             var APIKey = "8522788feb48b4797ad60e7823e7392b"
             queryURL =
                 "https://api.openweathermap.org/data/2.5/weather?q=houston&appid=8522788feb48b4797ad60e7823e7392b"
 
-            $(document).ready(function () {
 
-                //display the current day in the header
-                var currentDayEl = $("#currentDay")
-                var searchDivEl = $("#srchCity")
-                var dayIs = moment().format("dddd, MMMM Do YYYY");
-                currentDayEl.text(dayIs);
 
-                $("#srchCity").on("click", function() {
-                    console.log("after enter the city name is" + searchDivEl)
-                })
+            //display the current day in the header
+            var currentDayEl = $("#currentDay")
+            var cityDivEl = $("#srchCity")
+            var dayIs = moment().format("MMMM Do YYYY");
+            // var dayIs = moment().format("dddd, MMMM Do YYYY");
+            var cityIs = '';
+            var history = 1;
+
+            currentDayEl.text(dayIs);
+
+            $("#srchBtn").on("click", function () {
+                cityIs = document.getElementById("srchCity").value;
+                localStorage.setItem(history, cityIs)
+                queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+cityIs+"&appid=8522788feb48b4797ad60e7823e7392b"
                 
-                console.log("the city name is" + searchDiv)
-
-
+                console.log("did I get the city ... " + cityIs)
 
                 $.ajax({
-                    url: queryURL,
-                    method: "GET"
-                }).then(function (response) {
-                    console.log(response);
-                    console.log(response.name);
-                    var weatherDiv = $("test")
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response);
+                console.log(response.name);
+                var weatherDiv = $("test")
 
-                    console.log(" the city name is " + response.name);
-                    $("#city1").text(response.name + " 1")
-                    $("#city2").text(response.name + " 2")
-                    $("#city3").text(response.name + " 3")
-                    $("#city4").text(response.name + " 4")
-                    $("#city5").text(response.name + " 5")
-                });
-
+                console.log(" the city name is " + response.name);
+                $("#city1").text(response.name + " 1")
+                $("#city2").text(response.name + " 2")
+                $("#city").text(response.name +" "+ dayIs)
+            });
             })
-        </script>
 
 
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        |
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response);
+                console.log(response.name);
+                var weatherDiv = $("test")
+
+                console.log(" the city name is " + response.name);
+                $("#city1").text(response.name + " 1")
+                $("#city2").text(response.name + " 2")
+                $("#city3").text(response.name + " 3")
+                $("#city4").text(response.name + " 4")
+                $("#city5").text(response.name + " 5")
+            });
+
+        })
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    |
 </body>
 
 </html>
